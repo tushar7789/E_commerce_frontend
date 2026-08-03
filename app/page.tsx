@@ -1,14 +1,12 @@
 import "./globals.css"
-
-import NavigationBar from "@/components/common/navigation";
-import Footer from "@/components/common/footer";
+import AdBanner from "@/components/ui/home/AdBanner";
+import Categories from "@/components/ui/home/Categories";
 
 export default function Home() {
   return (
     <>
-      <NavigationBar />
-      <h1>Hello</h1>
-      <Footer />
+      <AdBanner />
+      <Categories />
     </>
   );
 }
