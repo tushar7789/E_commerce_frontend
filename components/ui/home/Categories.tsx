@@ -14,7 +14,7 @@ const Categories = () => {
 
 const CategoriesSection = () => {
     return (
-        <div className="h-min-50 w-full py-20 px-10  flex justify-around items-center bg-purple-400">
+        <div className="h-min-50 w-full py-15 px-10  flex justify-around items-center bg-gray-100">
             {Array.from({ length: 4 }, (_, index) => {
                 const i = index % 2;
                 return (
