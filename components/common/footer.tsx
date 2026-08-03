@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
     return (
-        <div className='h-80 w-full flex items-center bg-gray-700'>
+        <div className='h-80 w-full flex items-center bg-gray-500'>
             <LeftFooterComp />
             <RightFooterComp />
         </div>
@@ -11,7 +11,7 @@ function Footer() {
 
 function LeftFooterComp() {
     return (
-        <div className='h-full flex flex-col justify-start items-start w-6/12 p-10'>
+        <div className='h-full w-full px-10 py-20 flex flex-col justify-start items-start text-white'>
             <div>Facebook</div>
             <div>Instagram</div>
             <div>X</div>
@@ -21,11 +21,15 @@ function LeftFooterComp() {
 
 function RightFooterComp() {
     return (
-        <div className='h-full w-6/12'>
-            <div className='h-full flex flex-col justify-start items-end w-6/12 p-10'>
-                <div>Facebook</div>
-                <div>Instagram</div>
-                <div>X</div>
+        <div className='h-full w-full px-10 py-20 flex flex-col justify-start items-start text-white'>
+            <div className=''>
+                Facebook
+            </div>
+            <div>
+                Instagram
+            </div>
+            <div>
+                X
             </div>
         </div>
     );
