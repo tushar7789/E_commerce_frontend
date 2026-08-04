@@ -53,16 +53,12 @@ const renderItem = (title: string, count: number) => ({
 
 const options = [
     {
-        label: <Title title="Libraries" />,
-        options: [renderItem('AntDesign', 10000), renderItem('AntDesign UI', 10600)],
+        label: <Title title="Electronics" />,
+        options: [renderItem('Charger', 1240), renderItem('Pendrive', 1060)],
     },
     {
-        label: <Title title="Solutions" />,
-        options: [renderItem('AntDesign UI FAQ', 60100), renderItem('AntDesign FAQ', 30010)],
-    },
-    {
-        label: <Title title="Articles" />,
-        options: [renderItem('AntDesign design language', 100000)],
+        label: <Title title="Sports" />,
+        options: [renderItem('Cricket Bat', 60100), renderItem('Badminton Racket', 30010)],
     },
 ];
 

@@ -1,3 +1,9 @@
+import InstagramLogo from "../../public/static_images/insta_logo.png"
+import YoutubeLogo from "../../public/static_images/yt_logo.png"
+import LinkedinLogo from "../../public/static_images/linkedin_logo.png"
+import FacebookLogo from "../../public/static_images/fb_logo.png"
+
+
 const LogoImage = {
     "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1Ml92Dbo7_Xt0kXdZvRrKUcfWiU_rtYW2mbR254fgDQ&s=10"
 }
@@ -23,4 +29,11 @@ const ImageDir = [
     },
 ]
 
-export { ImageDir, LogoImage };
+const FooterLogoList = [
+    InstagramLogo,
+    FacebookLogo,
+    YoutubeLogo,
+    LinkedinLogo
+]
+
+export { ImageDir, LogoImage, FooterLogoList };

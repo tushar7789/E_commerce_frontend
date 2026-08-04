@@ -5,7 +5,7 @@ import Link from 'next/link';
 interface ButtonCompInterface {
     children: ReactNode,
     to: string,
-    tailwindStyleString: string
+    tailwindStyleString?: string
 }
 
 const ButtonComp = ({ children, to, tailwindStyleString }: ButtonCompInterface) => {
