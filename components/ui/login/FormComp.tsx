@@ -13,7 +13,7 @@ export interface FormCompInterface {
 }
 
 
-const inpStyle = 'h-8 w-80 px-3 rounded-[4px] bg-white focus:outline-0';
+const inpStyle = 'h-8 w-80 px-3 rounded-[4px] bg-white border-b border-blue-600 focus:outline-0';
 
 const divStyle = 'h-20 flex flex-col justify-center items-start';
 
