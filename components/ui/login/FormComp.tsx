@@ -1,6 +1,10 @@
 'use client'
 
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createUser } from "@/app/auth/actions";
+import { userSchema, UserFormValues } from "@/app/auth/schema";
+import { useTransition } from 'react';
 
 
 interface A {
@@ -14,22 +18,49 @@ export interface FormCompInterface {
 
 
 const inpStyle = 'h-8 w-80 px-3 rounded-[4px] bg-white border-b border-blue-600 focus:outline-0';
-
 const divStyle = 'h-20 flex flex-col justify-center items-start';
-
 const submitButStyle = 'w-25 h-10 flex justify-center items-center rounded-[4px] text-white bg-blue-600 cursor-pointer';
 
 
 const FormComp = (prop: FormCompInterface) => {
+    const [isPending, startTransition] = useTransition();
+
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors }
-    } = useForm();
+    } = useForm<UserFormValues>({
+        resolver: zodResolver(userSchema),
+    });
+
+    const onSubmit = (data: UserFormValues) => {
+        // Wrap the Server Action in startTransition to manage loading states
+        startTransition(async () => {
+            const response = await createUser(data);
+
+            if (!response.success) {
+                // Map server-side validation errors back into React Hook Form
+                if (response.errors) {
+                    Object.entries(response.errors).forEach(([field, messages]) => {
+                        setError(field as keyof UserFormValues, {
+                            type: "server",
+                            message: messages?.[0],
+                        });
+                    });
+                } else {
+                    alert(response.message || "An unexpected error occurred.");
+                }
+                return;
+            }
+
+            alert(response.message);
+        });
+    };
 
     return (
         <form
-            onSubmit={handleSubmit((data) => { console.log(data) })}
+            onSubmit={handleSubmit(onSubmit)}
             className='w-80 h-80 pt-5 mx-auto flex flex-col justify-start items-center'
         >
             <div className={divStyle}>
@@ -45,7 +76,14 @@ const FormComp = (prop: FormCompInterface) => {
                 <input type="text" {...register('password', { required: true })} className={inpStyle} />
             </div>
             <div className={divStyle + " mt-6"}>
-                <button type="submit" className={submitButStyle}>{prop.label}</button>
+                <button type="submit" disabled={isPending} className={submitButStyle}>
+                    {!isPending ?
+                        prop.label :
+                        prop.label === "login" ?
+                            "Logging In..." :
+                            "Registering..."
+                    }
+                </button>
             </div>
         </form >
     );
