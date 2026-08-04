@@ -9,6 +9,7 @@ interface ButtonCompInterface {
 }
 
 const ButtonComp = ({ children, to, tailwindStyleString }: ButtonCompInterface) => {
+
     return (
         <Link href={to} className={tailwindStyleString}>
             {children}

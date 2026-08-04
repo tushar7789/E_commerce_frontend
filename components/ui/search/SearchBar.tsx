@@ -67,11 +67,11 @@ const SearchBar = () => {
     return (
         <AutoComplete
             classNames={{ popup: { root: styles.categorySearch } }}
-            popupMatchSelectWidth={500}
-            style={{ width: 550, height: 40 }}
+            popupMatchSelectWidth={600}
+            style={{ width: 600, height: 32, display: 'flex', alignItems: 'center' }}
             options={options}
         >
-            <Input.Search size="large" placeholder="input here" />
+            <Input.Search placeholder="search products...." />
         </AutoComplete>
     )
 }

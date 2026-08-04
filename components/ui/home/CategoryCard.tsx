@@ -20,9 +20,14 @@ const CategoryCard = (prop: CategoryCardInterface) => {
                     draggable={false}
                     alt="example"
                     src={prop.src}
+                    style={{
+                        height: 200,
+                        width: 260
+                    }}
                 />
             }
         >
+            Price 14,230.0
         </Card>
     );
 }

@@ -38,7 +38,7 @@ function SearchComp() {
 function ProfileComp() {
     return (
         <div className='h-full w-3/12 py-2.5 flex justify-around items-center'>
-            <ButtonComp to={"/login"} tailwindStyleString='h-full w-4/12 flex justify-center items-center border-0 rounded-[5px] bg-white hover:bg-amber-300'>
+            <ButtonComp to={"/auth/login"} tailwindStyleString='h-full w-4/12 flex justify-center items-center border-0 rounded-[5px] bg-white hover:bg-amber-300'>
                 <span className='h-full flex justify-center items-center'>Login</span>
             </ButtonComp>
             <ButtonComp to={"/"} tailwindStyleString='h-full w-4/10 flex justify-center items-center border-0 rounded-[5px] bg-white hover:bg-amber-300'>

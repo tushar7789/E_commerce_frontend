@@ -13,11 +13,11 @@ export interface FormCompInterface {
 }
 
 
-const inpStyle = 'h-8 w-80 px-2 rounded-[4px] bg-white focus:outline-0';
+const inpStyle = 'h-8 w-80 px-3 rounded-[4px] bg-white focus:outline-0';
 
 const divStyle = 'h-20 flex flex-col justify-center items-start';
 
-const submitButStyle = 'w-30 h-10 flex justify-center items-center rounded-[4px] bg-white cursor-pointer';
+const submitButStyle = 'w-25 h-10 flex justify-center items-center rounded-[4px] text-white bg-blue-600 cursor-pointer';
 
 
 const FormComp = (prop: FormCompInterface) => {
@@ -30,7 +30,7 @@ const FormComp = (prop: FormCompInterface) => {
     return (
         <form
             onSubmit={handleSubmit((data) => { console.log(data) })}
-            className='w-80 h-80 mx-auto flex flex-col justify-center items-center'
+            className='w-80 h-80 pt-5 mx-auto flex flex-col justify-start items-center'
         >
             <div className={divStyle}>
                 <InputAttributeComp label='Username'>
@@ -44,7 +44,7 @@ const FormComp = (prop: FormCompInterface) => {
                 </InputAttributeComp>
                 <input type="text" {...register('password', { required: true })} className={inpStyle} />
             </div>
-            <div className={divStyle}>
+            <div className={divStyle + " mt-6"}>
                 <button type="submit" className={submitButStyle}>{prop.label}</button>
             </div>
         </form >
