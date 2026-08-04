@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
     return (
-        <div className='h-80 w-full flex items-center bg-gray-500'>
+        <div className='h-80 w-full flex items-center bg-gray-700'>
             <LeftFooterComp />
             <RightFooterComp />
         </div>
