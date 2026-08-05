@@ -2,7 +2,7 @@ import FormComp from "@/components/ui/login/FormComp";
 
 const Page = () => {
     return (
-        <FormComp label="Sign Up" />
+        <FormComp label="SignUp" />
     );
 }
 

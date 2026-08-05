@@ -1,10 +1,11 @@
 'use client'
 
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser } from "@/app/auth/actions";
+import { operateOnUser } from "@/app/auth/actions";
 import { userSchema, UserFormValues } from "@/app/auth/schema";
 import { useTransition } from 'react';
+import { useRouter } from 'next/navigation'
 
 
 interface A {
@@ -23,12 +24,14 @@ const submitButStyle = 'w-25 h-10 flex justify-center items-center rounded-[4px]
 
 
 const FormComp = (prop: FormCompInterface) => {
+    const route = useRouter();
     const [isPending, startTransition] = useTransition();
 
     const {
         register,
         handleSubmit,
         setError,
+        reset,
         formState: { errors }
     } = useForm<UserFormValues>({
         resolver: zodResolver(userSchema),
@@ -37,7 +40,7 @@ const FormComp = (prop: FormCompInterface) => {
     const onSubmit = (data: UserFormValues) => {
         // Wrap the Server Action in startTransition to manage loading states
         startTransition(async () => {
-            const response = await createUser(data);
+            const response = await operateOnUser(data, prop.label);
 
             if (!response.success) {
                 // Map server-side validation errors back into React Hook Form
@@ -51,9 +54,11 @@ const FormComp = (prop: FormCompInterface) => {
                 } else {
                     alert(response.message || "An unexpected error occurred.");
                 }
+                reset();
                 return;
             }
 
+            route.push("/");
             alert(response.message);
         });
     };
@@ -80,8 +85,8 @@ const FormComp = (prop: FormCompInterface) => {
                     {!isPending ?
                         prop.label :
                         prop.label === "login" ?
-                            "Logging In..." :
-                            "Registering..."
+                            "Logging In" :
+                            "Signing Up"
                     }
                 </button>
             </div>
