@@ -2,8 +2,8 @@ import React from 'react';
 import { Card } from 'antd';
 
 interface CategoryCardInterface {
-    key: number;
     src: string;
+    price: string;
 }
 
 const CategoryCard = (prop: CategoryCardInterface) => {
@@ -13,7 +13,7 @@ const CategoryCard = (prop: CategoryCardInterface) => {
             variant="borderless"
             style={{
                 width: 260,
-                height: 260
+                height: 260,
             }}
             cover={
                 <img
@@ -27,7 +27,7 @@ const CategoryCard = (prop: CategoryCardInterface) => {
                 />
             }
         >
-            Price 14,230.0
+            {`Rs. ${prop.price}`}
         </Card>
     );
 }

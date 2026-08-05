@@ -37,7 +37,7 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="w-full box-border flex flex-col">
-        <NotificationComp one_time_msg={msgString} />
+        {msgString != '' ? <NotificationComp one_time_msg={msgString} /> : null}
         <NavigationBar />
         {children}
         <Footer />
