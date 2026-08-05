@@ -2,10 +2,9 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
-import { operateOnUser } from "@/app/auth/actions";
+import { checkData, operateOnUser } from "@/app/auth/actions";
 import { userSchema, UserFormValues } from "@/app/auth/schema";
 import { useTransition } from 'react';
-import { useRouter } from 'next/navigation'
 
 
 interface A {
@@ -24,7 +23,6 @@ const submitButStyle = 'w-25 h-10 flex justify-center items-center rounded-[4px]
 
 
 const FormComp = (prop: FormCompInterface) => {
-    const route = useRouter();
     const [isPending, startTransition] = useTransition();
 
     const {
@@ -38,28 +36,27 @@ const FormComp = (prop: FormCompInterface) => {
     });
 
     const onSubmit = (data: UserFormValues) => {
-        // Wrap the Server Action in startTransition to manage loading states
         startTransition(async () => {
-            const response = await operateOnUser(data, prop.label);
+            const resData = await checkData(data);
 
-            if (!response.success) {
+            if (!resData?.errors) {
+                console.log("reso i i i i  : ", resData);
                 // Map server-side validation errors back into React Hook Form
-                if (response.errors) {
-                    Object.entries(response.errors).forEach(([field, messages]) => {
+                if (resData?.errors) {
+                    Object.entries(resData.errors).forEach(([field, messages]) => {
                         setError(field as keyof UserFormValues, {
                             type: "server",
                             message: messages?.[0],
                         });
                     });
-                } else {
-                    alert(response.message || "An unexpected error occurred.");
+                } else if (resData === undefined) {
+                    console.log("An unexpected error occurred. Response : ", resData);
                 }
                 reset();
-                return;
             }
 
-            route.push("/");
-            alert(response.message);
+            await operateOnUser(data, prop.label);
+            return;
         });
     };
 

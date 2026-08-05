@@ -5,19 +5,24 @@ import { userSchema, UserFormValues } from "./schema";
 import { revalidatePath } from "next/cache";
 import { redirect } from 'next/navigation'
 
-
-export async function operateOnUser(data: UserFormValues, operation: string) {
+export async function checkData(data: UserFormValues) {
     const result = userSchema.safeParse(data);
 
     if (!result.success) {
         return { success: false, errors: result.error.flatten().fieldErrors };
     }
+} 
+
+
+export async function operateOnUser(data: UserFormValues, operation: string) {
+    const result = userSchema.safeParse(data);
 
     try {
-        const username = result.data.username;
-        const password = result.data.password;
+        const username = result?.data?.username;
+        const password = result?.data?.password;
         let API = "";
         let tokens = {};
+        let msgString = "";
 
         if(operation === "SignUp")
             API = "http://localhost:8080/users";
@@ -48,27 +53,38 @@ export async function operateOnUser(data: UserFormValues, operation: string) {
         const cookieStore = await cookies();
         cookieStore.set('session_token', JSON.stringify(tokens), {
             httpOnly: true,
-            // secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
             path: '/',
         });
 
         if(operation === "SignUp"){
-            revalidatePath("/auth/signup");
-            return { success: true, message: `Sign up for ${username} was successful!`};
+            msgString = `Sign up for ${username} was successful!`;
         }
         else {
-            revalidatePath("/auth/login");
-            return { success: true, message: `${username} is now logged in!`};  
+            msgString = `${username} is now logged in!`;
         } 
+
+        cookieStore.set('one_time_msg', msgString , {
+            httpOnly: false,
+            sameSite: 'lax',
+            path: '/',
+        });
+        revalidatePath("/");
+        redirect("/");
     }
     catch (error) {
-        return { success: false, error: {error} };
+        throw error;
     }
 }
 
 export async function logout() {
     const cookieStore = await cookies();
     cookieStore.delete('session_token');
+    cookieStore.set('one_time_msg', `You hav logged out!`, {
+        httpOnly: false,
+        sameSite: 'lax',
+        path: '/',
+    });
+    revalidatePath("/");
     redirect("/");
 }

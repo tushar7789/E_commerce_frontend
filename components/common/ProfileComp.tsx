@@ -28,9 +28,7 @@ const items: MenuProps['items'] = [
     {
         key: '3',
         label: <span onClick={async () => {
-            const res = await logout();
-            console.log("res : ", res);
-            return res;
+            await logout();
         }}>Logout</span>,
         icon: <LogoutOutlined />,
         danger: true,
