@@ -8,27 +8,29 @@ interface CategoryCardInterface {
 
 const CategoryCard = (prop: CategoryCardInterface) => {
     return (
-        <Card
-            hoverable
-            variant="borderless"
-            style={{
-                width: 260,
-                height: 260,
-            }}
-            cover={
-                <img
-                    draggable={false}
-                    alt="example"
-                    src={prop.src}
-                    style={{
-                        height: 200,
-                        width: 260
-                    }}
-                />
-            }
-        >
-            {`Rs. ${prop.price}`}
-        </Card>
+        <div className='h-full w-3/12 mx-5'>
+            <Card
+                hoverable
+                variant="borderless"
+                style={{
+                    width: 260,
+                    height: 260,
+                }}
+                cover={
+                    <img
+                        draggable={false}
+                        alt="example"
+                        src={prop.src}
+                        style={{
+                            height: 200,
+                            width: 260
+                        }}
+                    />
+                }
+            >
+                {`Rs. ${prop.price}`}
+            </Card>
+        </div>
     );
 }
 
