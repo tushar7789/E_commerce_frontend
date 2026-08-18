@@ -1,14 +1,22 @@
+'use client'
+
 import React from 'react';
 import { Card } from 'antd';
+import { useRouter } from 'next/navigation'
 
-interface CategoryCardInterface {
+type CategoryCardInterface = {
     src: string;
     price: string;
+    index: number;
+    productVisible: number;
+    id: number;
 }
 
 const CategoryCard = (prop: CategoryCardInterface) => {
+    const router = useRouter();
+
     return (
-        <div className='h-full w-3/12 mx-5'>
+        <div className='h-full w-3/12 mx-5 transition-transform duration-300' style={{ transform: `translateX(-${(prop.index * 450) / prop.productVisible}%)` }}>
             <Card
                 hoverable
                 variant="borderless"
@@ -27,6 +35,7 @@ const CategoryCard = (prop: CategoryCardInterface) => {
                         }}
                     />
                 }
+                onClick={() => { router.push(`/products/${prop.id}`) }}
             >
                 {`Rs. ${prop.price}`}
             </Card>

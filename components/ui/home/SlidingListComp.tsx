@@ -3,62 +3,63 @@
 import { useState } from 'react';
 import CategoryCard from "@/components/ui/home/CategoryCard"
 import ProductImageURL from "@/utils/Images/Products";
+import Image from 'next/image';
 
-interface A {
-    arrowDirection: string;
-    callbackSetter?: React.Dispatch<React.SetStateAction<number>>;
-    index?: number;
-    maxIndex?: number;
-}
+import LeftArrow from '@/public/static_images/left-arrow.png';
+import RightArrow from '@/public/static_images/right-arrow.png';
+
+const leftArrowStyle = "inline-block h-12 w-12 relative top-35 z-10 cursor-pointer";
+const rightArrowStyle = "inline-block h-12 w-12 z-10 relative top-35 cursor-pointer";
 
 const SlidingListComp = () => {
     const productVisible = 4;
     const maxIndex = ProductImageURL?.length - productVisible;
     const [index, setIndex] = useState<number>(0);
 
-    return (
-        <div className="h-65 w-full grid grid-cols-1 grid-rows-1">
-            <div className="h-full w-full pl-1 pb-15 flex justify-between items-center col-start-1 row-start-1 z-10 bg-transparent">
-                <Arrow arrowDirection="left" index={index} maxIndex={maxIndex} callbackSetter={setIndex} />
-                <Arrow arrowDirection="right" index={index} maxIndex={maxIndex} callbackSetter={setIndex} />
-            </div>
-            <div className="h-full w-full flex items-center col-start-1 row-start-1 z-0 overflow-clip">
-                {Array.from({ length: 4 }, (_, i) => {
-                    // const i = times != undefined ? times * 4 + index : 0;
-                    return (
-                        <CategoryCard key={i + index} src={ProductImageURL[i + index].url} price={ProductImageURL[i + index].price} />
-                    )
-                })}
-            </div>
-        </div>
-    );
-}
+    const handlePrev = () => {
+        if (index != 0) {
+            setIndex(s => s - 1);
+        }
+    }
 
-const Arrow = ({ arrowDirection, callbackSetter, index, maxIndex }: A) => {
-    const normalStyle = "h-10 w-10 flex justify-center items-center rounded-full text-2xl bg-blue-600/70 hover:cursor-pointer hover: hover:bg-blue-600";
-    const disabledStyle = "h-10 w-10 bg-transparent";
-    const leftDisabled = index === 0;
-    const rightDisabled = index === maxIndex;
-    const style = (arrowDirection === "left" && !leftDisabled) || (arrowDirection === "right" && !rightDisabled) ? normalStyle : disabledStyle;
-
-    const handleClick = () => {
-        if (callbackSetter != undefined) {
-            if (arrowDirection === "left") {
-                callbackSetter(s => s == 0 ? 0 : s - 1);
-            } else if (arrowDirection === "right") {
-                callbackSetter(s => s == maxIndex ? maxIndex : s + 1);
-            }
+    const handleNext = () => {
+        if (index != maxIndex) {
+            setIndex(s => s + 1);
         }
     }
 
     return (
-        <span className={style} onClick={handleClick}>
-            {
-                arrowDirection === "left" ? leftDisabled ? " " : "<" : null
-            }
-            {
-                arrowDirection === "right" ? rightDisabled ? " " : ">" : null
-            }
+        <>
+            <div className='w-full flex justify-between items-center'>
+                {
+                    index != 0 ?
+                        <Image className={leftArrowStyle} src={LeftArrow.src} height={0} width={0} alt="" onClick={handlePrev} />
+                        :
+                        <EmptyComp />
+                }
+                {
+                    index != maxIndex ?
+                        <Image className={rightArrowStyle} src={RightArrow.src} height={0} width={0} alt="" onClick={handleNext} />
+                        :
+                        <EmptyComp />
+                }
+
+            </div>
+            <div className="h-full w-full flex items-center  overflow-clip">
+                {ProductImageURL.map((ele) => {
+                    return (
+                        <CategoryCard key={ele.id} src={ele.url} price={ele.price} id={ele.id} index={index} productVisible={productVisible} />
+                    )
+                })}
+            </div>
+        </>
+    );
+}
+
+const EmptyComp = () => {
+    return (
+        <span className='inline-block h-8 w-8'>
+            &nbsp;
         </span>
     )
 }
